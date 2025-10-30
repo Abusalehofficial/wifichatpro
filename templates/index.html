@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>WiFi Chat Pro</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-light.min.css" rel="stylesheet">
+    <meta name="theme-color" content="#FFFFFF">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+</head>
+<body>
+    <div class="chat-app">
+        <!-- Header -->
+        <div class="chat-header">
+            <div class="header-content">
+                <div class="header-left">
+                    <div class="avatar-container">
+                        <div class="avatar">
+                            <i class="fas fa-wifi"></i>
+                        </div>
+                        <div class="status-dot"></div>
+                    </div>
+                    <div class="chat-info">
+                        <h1 class="chat-title">WiFi Chat Pro</h1>
+                        <span class="online-status" id="onlineStatus">Connecting...</span>
+                    </div>
+                </div>
+                <div class="header-right">
+                    <div class="user-pill" id="userPill">
+                        <span id="currentUsername">Loading...</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Messages Container -->
+        <div class="messages-wrapper" id="messagesWrapper">
+            <div class="messages-container" id="messagesContainer">
+                <div class="welcome-section">
+                    <div class="welcome-icon">💬</div>
+                    <h2>Welcome to WiFi Chat Pro</h2>
+                    <p>Share messages, files & code instantly over your local network</p>
+                    <div class="feature-pills">
+                        <span class="feature-pill">📦 100GB Files</span>
+                        <span class="feature-pill">⚡ Real-time</span>
+                        <span class="feature-pill">⏰ 24h Auto-delete</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Typing Indicator -->
+            <div class="typing-indicator hidden" id="typingIndicator">
+                <div class="typing-avatar">
+                    <div class="typing-dots">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </div>
+                <span class="typing-text" id="typingUser">Someone is typing...</span>
+            </div>
+        </div>
+
+        <!-- Input Area -->
+        <div class="input-section">
+            <div class="input-container">
+                <div class="input-actions">
+                    <button class="action-btn" id="attachBtn" title="Attach File">
+                        <i class="fas fa-paperclip"></i>
+                    </button>
+                </div>
+                
+                <div class="message-input-container">
+                    <textarea 
+                        id="messageInput" 
+                        placeholder="Type a message or paste code..." 
+                        rows="1"
+                    ></textarea>
+                </div>
+                
+                <button class="send-button" id="sendBtn">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+            
+            <input type="file" id="fileInput" style="display: none" multiple accept="*/*">
+        </div>
+
+        <!-- Code Viewer Modal -->
+        <div class="code-modal hidden" id="codeModal">
+            <div class="code-modal-content">
+                <div class="code-modal-header">
+                    <div class="code-info">
+                        <h3 id="codeTitle">Code</h3>
+                        <span id="codeLanguage" class="code-language"></span>
+                    </div>
+                    <button class="close-modal" id="closeCodeModal">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="code-modal-body">
+                    <pre id="codeContent"><code></code></pre>
+                </div>
+                <div class="code-modal-footer">
+                    <button class="copy-btn" id="copyCodeBtn">
+                        <i class="fas fa-copy"></i> Copy Code
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Upload Progress -->
+        <div class="upload-overlay hidden" id="uploadOverlay">
+            <div class="upload-modal">
+                <div class="upload-header">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    <h3>Uploading File</h3>
+                </div>
+                <div class="upload-progress">
+                    <div class="progress-track">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                    <span class="progress-text" id="progressText">0%</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Connection Status -->
+        <div class="connection-toast hidden" id="connectionToast">
+            <i class="fas fa-wifi"></i>
+            <span>Reconnecting...</span>
+        </div>
+
+        <!-- Context Menu -->
+        <div class="context-menu hidden" id="contextMenu">
+            <div class="context-item" id="deleteMessage">
+                <i class="fas fa-trash"></i>
+                <span>Delete</span>
+            </div>
+            <div class="context-item" id="copyMessage">
+                <i class="fas fa-copy"></i>
+                <span>Copy</span>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.2/socket.io.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>
